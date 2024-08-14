@@ -1,0 +1,54 @@
+*.sqlite*
+# Laravel & PHP related
+/vendor/
+/node_modules/
+public/hot
+public/storage
+storage/*.key
+.env
+.env.backup
+Homestead.yaml
+Homestead.json
+/.vagrant
+
+# Ignoring system files
+.DS_Store
+Thumbs.db
+
+# Ignoring IDE and editor files
+/.idea
+/.vscode
+*.sublime-workspace
+*.sublime-project
+
+# Ignoring log files and caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# Ignoring Composer & Node files
+composer.lock
+npm-debug.log
+yarn-error.log
+
+# Ignoring deployment & build files
+.phpunit.result.cache
+.phpunit.cache
+
+# Ignoring compiled files
+/public/js
+/public/css
+/public/mix-manifest.json
+/public/hot
+/public/storage
+/storage/*.key
+/.env.*
+.env.*
+
+# Ignoring temporary files
+*.swp
+*.swo
+*.swm
