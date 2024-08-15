@@ -1,0 +1,67 @@
+name: Laravel CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0.31
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: amazon_clone
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+        ports:
+          - 3306:3306
+        volumes:
+          - /var/lib/mysql
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, pdo, pdo_mysql, curl, dom, fileinfo, json, openssl, tokenizer, xml
+        coverage: xdebug
+        tools: composer
+
+    - name: Install Dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Create .env file
+      run: cp .env.example .env
+
+    - name: Set up environment variables
+      run: |
+        php artisan config:cache
+        php artisan key:generate
+        sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=mysql/' .env
+        sed -i 's/DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
+        sed -i 's/DB_PORT=3306/DB_PORT=3306/' .env
+        sed -i 's/DB_DATABASE=laravel/DB_DATABASE=amazon_clone/' .env
+        sed -i 's/DB_USERNAME=root/DB_USERNAME=root/' .env
+        sed -i "s/DB_PASSWORD=/DB_PASSWORD=''/g" .env
+
+    - name: Run Migrations
+      run: php artisan migrate --force
+
+    - name: Run All Tests
+      run: php artisan test
