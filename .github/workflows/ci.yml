@@ -20,8 +20,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: amazon_clone
-          MYSQL_USER: root
-          MYSQL_PASSWORD: ''
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
