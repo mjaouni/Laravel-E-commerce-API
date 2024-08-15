@@ -18,7 +18,7 @@ jobs:
       mysql:
         image: mysql:8.0.31
         env:
-          MYSQL_ROOT_PASSWORD: '' # Root password is empty, as per your .env
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Allowing MySQL to start without a root password
           MYSQL_DATABASE: amazon_clone
         options: >-
           --health-cmd="mysqladmin ping --silent"
