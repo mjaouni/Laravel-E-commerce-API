@@ -61,20 +61,20 @@ jobs:
     - name: Create .env file
       run: cp .env.example .env
   
-    - name: Debug Print .env file
-      run: cat .env
+    #- name: Debug Print .env file
+    #  run: cat .env
   
-    - name: Verify Database Existence
-      run: |
-        mysql -h 127.0.0.1 -P 3306 -u root -e "SHOW DATABASES LIKE 'amazon_clone';"
+    #- name: Verify Database Existence
+    #  run: |
+    #    mysql -h 127.0.0.1 -P 3306 -u root -e "SHOW DATABASES LIKE 'amazon_clone';"
   
-    - name: Create Database if Not Exists
-      run: |
-        mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS amazon_clone;"
+    #- name: Create Database if Not Exists
+    #  run: |
+    #    mysql -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS amazon_clone;"
   
-    - name: Test MySQL Connection
-      run: |
-        mysql -h 127.0.0.1 -P 3306 -u root -e "USE amazon_clone;"
+    #- name: Test MySQL Connection
+    #  run: |
+    #    mysql -h 127.0.0.1 -P 3306 -u root -e "USE amazon_clone;"
   
     - name: Clear Configuration Cache
       run: php artisan config:clear  
