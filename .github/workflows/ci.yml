@@ -58,10 +58,26 @@ jobs:
         sed -i 's/DB_USERNAME=root/DB_USERNAME=root/' .env
         sed -i "s/DB_PASSWORD=/DB_PASSWORD=''/g" .env
 
-    
-    # Ensure Proper Environment in CI    
-    - name: Debug Print Environment Variables
-      run: env   
+    - name: Create .env file
+      run: cp .env.example .env
+  
+    - name: Debug Print .env file
+      run: cat .env
+  
+    - name: Verify Database Existence
+      run: |
+        mysql -u root -e "SHOW DATABASES LIKE 'amazon_clone';"
+  
+    - name: Create Database if Not Exists
+      run: |
+        mysql -u root -e "CREATE DATABASE IF NOT EXISTS amazon_clone;"
+  
+    - name: Test MySQL Connection
+      run: |
+          mysql -h 127.0.0.1 -P 3307 -u root -e "USE amazon_clone;"
+  
+    - name: Clear Configuration Cache
+      run: php artisan config:clear  
        
     - name: Run Migrations
       run: php artisan migrate --force
