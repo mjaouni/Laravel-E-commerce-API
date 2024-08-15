@@ -44,8 +44,8 @@ jobs:
     - name: Install Dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Create .env file
-      run: cp .env.example .env
+    #- name: Create .env file
+    #  run: cp .env.example .env
 
     - name: Set up environment variables
       run: |
