@@ -80,10 +80,8 @@ jobs:
       run: php artisan config:clear  
        
     - name: Run Migrations
-      run: | 
-          php artisan migrate:rollback
-          php artisan migrate --force
-
+      run: php artisan migrate --force
+        
 
     - name: Run All Tests
       run: php artisan test
