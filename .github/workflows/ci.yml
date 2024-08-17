@@ -85,12 +85,15 @@ jobs:
     - name: Run Migrations
       run: php artisan migrate --force
     
-    - name: Run PHPCS (Code Sniffer) - Ignore Warnings
-      run: vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n .
+    #- name: Run PHPCS (Code Sniffer) - Ignore Warnings
+    #  run: vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n .
 
-    - name: Run PHPCBF (Code Beautifier and Fixer) - Ignore Warnings
-      run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n . 
+    #- name: Run PHPCBF (Code Beautifier and Fixer) - Ignore Warnings
+     # run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n . 
             
+    - name: Run PHP CodeSniffer and Beautifier
+      run: ./run_phpcs_phpcbf.sh
+
     - name: Run Larastan (PHPStan for Laravel)
       run: vendor/bin/phpstan analyse --configuration=phpstan.neon
 
