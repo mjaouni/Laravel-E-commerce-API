@@ -6,8 +6,8 @@ STANDARD=phpcs.xml
 
 # Shortcut for running PHP Code Sniffer
 lint:
-	$(PHPCS) --standard=$(STANDARD)  --ignore=vendor/,storage/,boostrap/,cofig/ -n .
+	$(PHPCS) --standard=$(STANDARD)  --ignore=vendor/,storage/,bootstrap/*,cofig/ -n .
 
 # Shortcut for automatically fixing code standard violations
 lint-fix:
-	$(PHPCBF) --standard=$(STANDARD) --ignore=vendor/,storage/,boostrap/,cofig/ -n .
+	$(PHPCBF) --standard=$(STANDARD) --ignore=vendor/,storage/,bootstrap/*,cofig/ -n .
