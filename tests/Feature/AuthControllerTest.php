@@ -164,7 +164,11 @@ class AuthControllerTest extends TestCase
         }
 
         // Simulate making one more request beyond the limit
-        $response = $this->postJson($url, $registrationData);
+        $response = $this->postJson('/api/v1/register', [
+            'name' => 'Test User',
+            'email' => 'testuser300@gmail.com',
+            'password' => 'password123',
+            ]);
 
         // Assert that the response indicates a rate limit has been exceeded
         $response->assertStatus(429); // 429 Too Many Requests
