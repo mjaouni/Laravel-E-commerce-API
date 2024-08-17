@@ -129,4 +129,3 @@ class AuthControllerTest extends TestCase
                 ->assertJsonValidationErrors(['email']);
     }
 }
-show details and to include phpstan.neon and the inherted laravel extension.neon
