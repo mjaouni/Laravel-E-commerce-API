@@ -10,18 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    /*
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }*/
     use RefreshDatabase;
 
     /**
@@ -59,7 +47,12 @@ class AuthControllerTest extends TestCase
         ]);
     }
 
-    // Test for empty fields
+    /**
+     * Test for empty fields.
+     *
+     * @return void
+    */
+
     public function test_user_registration_with_empty_fields(): void
     {
         // Empty name
@@ -75,7 +68,12 @@ class AuthControllerTest extends TestCase
                  ->assertJsonValidationErrors(['name','email','password']);
     }
 
-    // Test for maximum length fields
+    /**
+     * Test for maximum length fields
+     *
+     * @return void
+    */
+
     public function test_user_registration_with_max_length_exceeded(): void
     {
         $response = $this->postJson('/api/v1/register', [
@@ -87,7 +85,12 @@ class AuthControllerTest extends TestCase
                  ->assertJsonValidationErrors(['name', 'email','password']);
     }
 
-     // Test for minimum length fields
+    /**
+     * Test for minimum length fields
+     *
+     * @return void
+    */
+
     public function test_user_registration_with_min_length_violations(): void
     {
         $response = $this->postJson('/api/v1/register', [
@@ -99,7 +102,12 @@ class AuthControllerTest extends TestCase
                  ->assertJsonValidationErrors(['name','password']);
     }
 
-     // Test for invalid format
+    /**
+     * Test for invalid format
+     *
+     * @return void
+    */
+
     public function test_user_registration_with_invalid_email_format(): void
     {
         $response = $this->postJson('/api/v1/register', [
@@ -112,7 +120,12 @@ class AuthControllerTest extends TestCase
                 ->assertJsonValidationErrors(['email']);
     }
 
-     // Test for existing format
+    /**
+     * Test for existing email
+     *
+     * @return void
+    */
+
     public function test_user_registration_with_existing_email(): void
     {
         User::factory()->create([
@@ -127,5 +140,33 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(422)
                 ->assertJsonValidationErrors(['email']);
+    }
+
+    /**
+     * Test API rate limiting on the registration endpoint.
+     *
+     * @return void
+    */
+
+    public function test_registration_rate_limiting(): void
+    {
+       // Define the number of allowed requests and the URL to be tested
+        $maxAttempts = 60; // limit to 60 request per second
+
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            $response = $this->postJson('/api/v1/register', [
+            'name' => 'Test User' . ++$i,
+            'email' => 'testuser3' . ++$i . '@gmail.com',
+            'password' => 'password123' . ++$i,
+            ]);
+
+            $response->assertStatus(201); // Assuming a successful registration returns a 201 status code
+        }
+
+        // Simulate making one more request beyond the limit
+        $response = $this->postJson($url, $registrationData);
+
+        // Assert that the response indicates a rate limit has been exceeded
+        $response->assertStatus(429); // 429 Too Many Requests
     }
 }
