@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Laravel Standards">
+    <description>Custom Laravel Coding Standards based on PSR-12 with camelCase ignored.</description>
+
+    <!-- Include the PSR-12 standard -->
+    <rule ref="PSR12"/>
+
+    <!-- Exclude the camelCase enforcement rules -->
+    <!--<exclude name="PSR1.Methods.CamelCapsMethodName"/>-->
+    <!--<rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+    
+    </rule>-->
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+      <exclude-pattern>.</exclude-pattern>
+    </rule>
+
+    <!-- Exclude namespace rule in migrations -->
+    <exclude-pattern>/database/migrations/*</exclude-pattern>
+
+    <!-- Optionally include other custom rules or standards -->
+    <!-- Add any additional rules or exclusions as needed -->
+</ruleset>

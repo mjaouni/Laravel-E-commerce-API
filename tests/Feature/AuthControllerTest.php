@@ -15,15 +15,13 @@ class AuthControllerTest extends TestCase
      *
      * @return void
      */
-    
-    /* 
+    /*
     public function test_example()
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
-    }
-    */
+    }*/
     use RefreshDatabase;
 
     /**
@@ -32,35 +30,34 @@ class AuthControllerTest extends TestCase
      * @return void
      */
 
-     public function test_user_registration_with_valid_data()
-     {
-      $response = $this->postJson('/api/register',[
+    public function test_user_registration_with_valid_data()
+    {
+        $response = $this->postJson('/api/register', [
         'name'  => 'Test User',
         'email' => 'testuser@gmail.com',
         'password' => 'password123',
-      ]);  
+        ]);
 
-      $response->assertStatus(201)
-               ->assertJson([
-                 'message' => 'User registered successfully',
-               ]) 
-               ->assertJsonStructure([
-                'message',
-                'user' => [
-                    'id',
-                    'name',
-                    'email',
-                    'created_at',
-                    'updated_at',
-                ],
+        $response->assertStatus(201)
+              ->assertJson([
+                'message' => 'User registered successfully',
+              ])
+              ->assertJsonStructure([
+               'message',
+               'user' => [
+                   'id',
+                   'name',
+                   'email',
+                   'created_at',
+                   'updated_at',
+               ],
 
-            ]);
+           ]);
 
-        $this->assertDatabaseHas('users',[
-            'email'=>'testuser@gmail.com'
-        ]);    
-
-     }
+        $this->assertDatabaseHas('users', [
+           'email' => 'testuser@gmail.com'
+        ]);
+    }
 
     // Test for empty fields
     public function test_user_registration_with_empty_fields()
@@ -76,7 +73,6 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(422)
                  ->assertJsonValidationErrors(['name','email','password']);
-
     }
 
     // Test for maximum length fields
@@ -92,45 +88,44 @@ class AuthControllerTest extends TestCase
     }
 
      // Test for minimum length fields
-     public function test_user_registration_with_min_length_violations()
-     {
-         $response = $this->postJson('/api/register', [
-             'name' => 'A', // At least 3 char
-             'email' => 'a@b.c', // No email min limit, this should pass
-             'password' => 'short', // At least 8 char
-         ]);
-         $response->assertStatus(422)
-                  ->assertJsonValidationErrors(['name','password']);
-     }
+    public function test_user_registration_with_min_length_violations()
+    {
+        $response = $this->postJson('/api/register', [
+            'name' => 'A', // At least 3 char
+            'email' => 'a@b.c', // No email min limit, this should pass
+            'password' => 'short', // At least 8 char
+        ]);
+        $response->assertStatus(422)
+                 ->assertJsonValidationErrors(['name','password']);
+    }
 
      // Test for invalid format
-     public function test_user_registration_with_invalid_email_format()
-     {
-        $response = $this->postJson('/api/register',[
-            'name' => 'Test User',
-            'email'=> 'not-an-email',
-            'password'=> 'password123',
+    public function test_user_registration_with_invalid_email_format()
+    {
+        $response = $this->postJson('/api/register', [
+           'name' => 'Test User',
+           'email' => 'not-an-email',
+           'password' => 'password123',
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['email']);
-     }
+                ->assertJsonValidationErrors(['email']);
+    }
 
      // Test for existing format
-     public function test_user_registration_with_existing_email()
-     {
+    public function test_user_registration_with_existing_email()
+    {
         User::factory()->create([
-            'email' => 'testuser5@gmail.com'
+           'email' => 'testuser3@gmail.com'
         ]);
 
-        $response = $this->postJson('/api/register',[
-            'name' => 'Test User',
-            'email'=> 'testuser5@gmail.com',
-            'password'=> 'password123',
+        $response = $this->postJson('/api/register', [
+           'name' => 'Test User',
+           'email' => 'testuser3@gmail.com',
+           'password' => 'password123',
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonValidationErrors(['email']);
-     }   
-   
+                ->assertJsonValidationErrors(['email']);
+    }
 }
