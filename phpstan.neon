@@ -1,0 +1,37 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - app
+        - database
+        - routes
+        - tests
+    
+    # Explicitly disable parallel processing
+    parallel:
+        maximumNumberOfProcesses: 1
+        jobSize: 1
+        
+    # Include any files that should be loaded before analysis
+    bootstrapFiles:
+        - bootstrap/app.php
+
+    excludePaths:
+        - bootstrap/cache/*
+        - database/factories/*
+        - app/Providers/*
+        - routes/console.php
+    
+    # Deprecated
+    # checkMissingIterableValueType: false
+
+    ignoreErrors:
+        - '#missingType\.iterableValue#'
+        - '#missingType\.generics#'
+    
+    reportUnmatchedIgnoredErrors: false
+    
+    checkModelProperties: false
+    checkOctaneCompatibility: false

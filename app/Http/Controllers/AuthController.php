@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $validator = Validator::make(
             $request->all(),
@@ -32,6 +33,7 @@ class AuthController extends Controller
             [
             'name' => $request->name,
             'email' => $request->email,
+            // @phpstan-ignore-next-line
             'password' => Hash::make($request->password),
             ]
         );

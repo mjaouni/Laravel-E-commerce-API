@@ -89,7 +89,10 @@ jobs:
       run: vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n .
 
     - name: Run PHPCBF (Code Beautifier and Fixer) - Ignore Warnings
-      run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n .        
-    
+      run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n . 
+            
+    - name: Run Larastan (PHPStan for Laravel)
+      run: vendor/bin/phpstan analyse --configuration=phpstan.neon
+
     - name: Run All Tests
       run: php artisan test

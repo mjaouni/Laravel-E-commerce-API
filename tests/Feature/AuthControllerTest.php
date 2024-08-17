@@ -30,7 +30,7 @@ class AuthControllerTest extends TestCase
      * @return void
      */
 
-    public function test_user_registration_with_valid_data()
+    public function test_user_registration_with_valid_data(): void
     {
         $response = $this->postJson('/api/register', [
         'name'  => 'Test User',
@@ -60,7 +60,7 @@ class AuthControllerTest extends TestCase
     }
 
     // Test for empty fields
-    public function test_user_registration_with_empty_fields()
+    public function test_user_registration_with_empty_fields(): void
     {
         // Empty name
         $response = $this->postJson('/api/register', [
@@ -76,7 +76,7 @@ class AuthControllerTest extends TestCase
     }
 
     // Test for maximum length fields
-    public function test_user_registration_with_max_length_exceeded()
+    public function test_user_registration_with_max_length_exceeded(): void
     {
         $response = $this->postJson('/api/register', [
             'name' => str_repeat('A', 256),
@@ -88,7 +88,7 @@ class AuthControllerTest extends TestCase
     }
 
      // Test for minimum length fields
-    public function test_user_registration_with_min_length_violations()
+    public function test_user_registration_with_min_length_violations(): void
     {
         $response = $this->postJson('/api/register', [
             'name' => 'A', // At least 3 char
@@ -100,7 +100,7 @@ class AuthControllerTest extends TestCase
     }
 
      // Test for invalid format
-    public function test_user_registration_with_invalid_email_format()
+    public function test_user_registration_with_invalid_email_format(): void
     {
         $response = $this->postJson('/api/register', [
            'name' => 'Test User',
@@ -113,7 +113,7 @@ class AuthControllerTest extends TestCase
     }
 
      // Test for existing format
-    public function test_user_registration_with_existing_email()
+    public function test_user_registration_with_existing_email(): void
     {
         User::factory()->create([
            'email' => 'testuser3@gmail.com'
@@ -129,3 +129,4 @@ class AuthControllerTest extends TestCase
                 ->assertJsonValidationErrors(['email']);
     }
 }
+show details and to include phpstan.neon and the inherted laravel extension.neon
