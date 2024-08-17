@@ -32,7 +32,7 @@ class AuthControllerTest extends TestCase
 
     public function test_user_registration_with_valid_data(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
         'name'  => 'Test User',
         'email' => 'testuser777@gmail.com',
         'password' => 'password123',
@@ -63,7 +63,7 @@ class AuthControllerTest extends TestCase
     public function test_user_registration_with_empty_fields(): void
     {
         // Empty name
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
             'name' => '', //Empty Name
             'email' => '', //Empty Email
             'password' => '', //Empty Password
@@ -78,7 +78,7 @@ class AuthControllerTest extends TestCase
     // Test for maximum length fields
     public function test_user_registration_with_max_length_exceeded(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
             'name' => str_repeat('A', 256),
             'email' => str_repeat('a', 247) . '@example.com',
             'password' => str_repeat('P', 256),
@@ -90,7 +90,7 @@ class AuthControllerTest extends TestCase
      // Test for minimum length fields
     public function test_user_registration_with_min_length_violations(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
             'name' => 'A', // At least 3 char
             'email' => 'a@b.c', // No email min limit, this should pass
             'password' => 'short', // At least 8 char
@@ -102,7 +102,7 @@ class AuthControllerTest extends TestCase
      // Test for invalid format
     public function test_user_registration_with_invalid_email_format(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
            'name' => 'Test User',
            'email' => 'not-an-email',
            'password' => 'password123',
@@ -119,7 +119,7 @@ class AuthControllerTest extends TestCase
            'email' => 'testuser3@gmail.com'
         ]);
 
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/v1/register', [
            'name' => 'Test User',
            'email' => 'testuser3@gmail.com',
            'password' => 'password123',
