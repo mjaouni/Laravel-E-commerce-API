@@ -91,6 +91,9 @@ jobs:
     #- name: Run PHPCBF (Code Beautifier and Fixer) - Ignore Warnings
      # run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ -n . 
             
+    - name: Set execute permission for the script run_phpcs_phpcbf.sh
+      run: chmod +x ./run_phpcs_phpcbf.sh
+
     - name: Run PHP CodeSniffer and Beautifier
       run: ./run_phpcs_phpcbf.sh
 
