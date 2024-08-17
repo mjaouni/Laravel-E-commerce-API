@@ -60,7 +60,8 @@ class AuthControllerTest extends TestCase
     }
 
     // Test for empty fields
-    public function test_user_registration_with_empty_fields(){
+    public function test_user_registration_with_empty_fields()
+    {
         // Empty name
         $response = $this->postJson('/api/register', [
             'name' => '', //Empty Name
