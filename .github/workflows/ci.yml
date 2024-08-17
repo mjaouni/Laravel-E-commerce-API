@@ -86,10 +86,10 @@ jobs:
       run: php artisan migrate --force
     
     - name: Run PHPCS (Code Sniffer)
-      run: vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/
+      run: vendor/bin/phpcs --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ .
 
     - name: Run PHPCBF (Code Beautifier and Fixer)
-      run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/        
+      run: vendor/bin/phpcbf --standard=phpcs.xml --ignore=vendor/,storage/,bootstrap/,config/ .        
     
     - name: Run All Tests
       run: php artisan test
