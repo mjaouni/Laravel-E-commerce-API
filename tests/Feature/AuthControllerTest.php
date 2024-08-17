@@ -55,7 +55,7 @@ class AuthControllerTest extends TestCase
            ]);
 
         $this->assertDatabaseHas('users', [
-           'email' => 'testuser@gmail.com'
+           'email' => 'testuser777@gmail.com'
         ]);
     }
 
